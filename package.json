@@ -1,0 +1,17 @@
+{
+  "name": "tp_1",
+  "version": "1.0.0",
+  "description": "NoSQL",
+  "main": "fakedata.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "express": "^4.19.2",
+    "mongodb": "^6.5.0"
+  }
+}
