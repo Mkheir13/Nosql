@@ -21,38 +21,39 @@ version: '3.8'
 
 services:
   mongo1:
-    image: mongo:4.4
     container_name: mongo1
-    ports:
-      - 27017:27017
-    volumes:
-      - ./data/mongo1:/data/db
+    image: mongo:4.4
     networks:
-      - mongo-cluster
-
+      - mongors-network
+    ports:
+      - 27021:27017
+    links:
+      - mongo2
+      - mongo3
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
   mongo2:
-    image: mongo:4.4
     container_name: mongo2
-    ports:
-      - 27018:27017
-    volumes:
-      - ./data/mongo2:/data/db
-    networks:
-      - mongo-cluster
-
-  mongo3:
     image: mongo:4.4
-    container_name: mongo3
-    ports:
-      - 27019:27017
-    volumes:
-      - ./data/mongo3:/data/db
     networks:
-      - mongo-cluster
+      - mongors-network
+    ports:
+      - 27022:27017
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
+  mongo3:
+    container_name: mongo3
+    image: mongo:4.4
+    networks:
+      - mongors-network
+    ports:
+      - 27023:27017
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
 
 networks:
-    mongo-cluster:
-        driver: bridge
+  mongors-network:
+    driver: bridge
    ```
 
 Dans ce fichier, nous avons défini trois services MongoDB, `mongo1`, `mongo2` et `mongo3`. 
@@ -75,7 +76,7 @@ docker ps
 
 Vous devriez voir trois conteneurs MongoDB en cours d'exécution.
 
-![img.png](img.png)
+![img.png](assets/img.png)
 
 ---
 
@@ -114,6 +115,52 @@ rs.status()
 
 Vous devriez voir un résultat similaire à celui-ci.
 
-![img_1.png](img_1.png)
+![img_1.png](assets/img_1.png)
 
 ---
+
+
+# Explication du docker-compose.yml
+
+Dans ce tutoriel, nous avons utilisé un fichier `docker-compose.yml` pour démarrer trois instances MongoDB en mode Replica Set.
+
+Voici une explication des différentes parties du fichier `docker-compose.yml`.
+
+```yml
+version: '3.8'
+```
+
+La version de la spécification Docker Compose utilisée dans ce fichier.
+
+```yml
+services:
+  mongo1:
+    container_name: mongo1
+    image: mongo:4.4
+    networks:
+      - mongors-network
+    ports:
+      - 27021:27017
+    links:
+      - mongo2
+      - mongo3
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
+```
+
+Définition du service `mongo1`:
+- `container_name`: Nom du conteneur.
+- `image`: Image Docker utilisée pour le service, on utilise l'image `mongo:4.4` dans ce cas.
+- `networks`: Réseau auquel le conteneur est connecté.
+- `ports`: Mappage des ports du conteneur sur les ports de l'hôte.
+- `links`: Liens vers d'autres services.
+- `restart`: Politique de redémarrage du conteneur.
+- `entrypoint`: Commande d'entrée à exécuter lors du démarrage du conteneur.
+
+```yml
+networks:
+  mongors-network:
+    driver: bridge
+```
+
+Définition du réseau `mongors-network` utilisé pour connecter les trois services MongoDB.
