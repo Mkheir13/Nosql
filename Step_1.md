@@ -2,16 +2,10 @@
 
 Dans ce tutoriel, nous allons voir comment configurer MongoDB en mode Replica Set.
 
-## Prérequis
-- [MongoDB](https://www.mongodb.com/try/download/community) installé sur votre machine
-- [MongoDB Compass](https://www.mongodb.com/try/download/compass) installé sur votre machine
-- [Docker](https://docs.docker.com/get-docker/) installé sur votre machine
-- [Docker Compose](https://docs.docker.com/compose/install/) installé sur votre machine
-- [Git](https://git-scm.com/downloads) installé sur votre machine
-- Un éditeur de texte (VS Code, Sublime Text, Atom, etc.)
 
 ## Étapes
 1. [Création du fichier docker-compose.yml](#1-création-du-fichier-docker-composeyml)
+2. [Initialisation du Replica Set](#2-initialisation-du-replica-set)
 
 ### 1. Création du fichier docker-compose.yml
 Créez un nouveau répertoire sur votre machine et créez un fichier `docker-compose.yml` à l'intérieur.
