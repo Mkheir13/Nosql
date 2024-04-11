@@ -45,7 +45,7 @@ Dans ce script, nous avons utilisé le module `@faker-js/faker` pour générer d
 
 ### 2. Exécution du script grace a Dockerfile
 
-Créez un fichier `Dockerfile` avec le contenu suivant.
+Créez un fichier `Dockerfile` avec le contenu suivant et lancez le
 
 ```Dockerfile
 FROM node:slim
