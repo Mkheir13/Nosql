@@ -65,7 +65,7 @@ RUN npm i
 Ouvrez un terminal et exécutez la commande suivante :
 
 ```bash
-docker-compose up -it mongo1 /bin/bash
+docker exec -it mongo1 mongo
 ```
 
 Ensuite, exécutez la commande suivante pour exécuter le script.
